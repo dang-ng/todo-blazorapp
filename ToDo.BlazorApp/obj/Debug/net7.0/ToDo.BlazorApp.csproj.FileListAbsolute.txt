@@ -30,3 +30,4 @@ C:\Users\haida\Downloads\My Projects\ToDo.BlazorApp\ToDo.BlazorApp\obj\Debug\net
 C:\Users\haida\Downloads\My Projects\ToDo.BlazorApp\ToDo.BlazorApp\obj\Debug\net7.0\ToDo.BlazorApp.pdb
 C:\Users\haida\Downloads\My Projects\ToDo.BlazorApp\ToDo.BlazorApp\obj\Debug\net7.0\ToDo.BlazorApp.genruntimeconfig.cache
 C:\Users\haida\Downloads\My Projects\ToDo.BlazorApp\ToDo.BlazorApp\obj\Debug\net7.0\ref\ToDo.BlazorApp.dll
+C:\Users\haida\Downloads\My Projects\ToDo.BlazorApp\ToDo.BlazorApp\bin\Debug\net7.0\Data\todo.json

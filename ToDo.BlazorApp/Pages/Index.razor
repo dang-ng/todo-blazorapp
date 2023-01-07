@@ -1,8 +1,8 @@
 ﻿@page "/"
 @using Data
+@using static ToDo.BlazorApp.Components.ToDoListItem
 @inject ToDoItemService Service
 @code {
-
     private List<ToDoItem> _data;
     private string _current;
     private ToDoItem _item;
@@ -12,8 +12,35 @@
         _data = Service.GetData();
         _item = _data != null && _data.Count > 0 ? _data[0] : null;
     }
-}
 
+    private void Add()
+    {
+        if (!string.IsNullOrWhiteSpace(_current))
+        {
+            _data.Add(new ToDoItem() { Title = _current });
+        }
+    }
+
+    private void Clear() => _data.RemoveAll(i => i.Done);
+    private void ClearAll() => _data.Clear();
+
+    private void DoTheThing(KeyboardEventArgs eventArgs)
+    {
+        if(eventArgs.Key=="Enter"){Add();}
+    }
+
+    private void Save() => Service.SaveChange();
+}
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <button @onclick="Add" class="btn btn-outline-success" type="button">Add</button>
+    </div>
+    <input type="text" class="form-control" @bind="_current" placeholder="Todo" @onkeyup="DoTheThing"/>
+    <div class="input-group-append">
+        <button @onclick="Add" class="btn btn-outline-success" type="button">Add</button>
+    </div>
+</div>
+<ToDoListItem Item="_item"/>
 <ol class="list-group">
     @foreach (var i in _data)
     {
@@ -24,12 +51,15 @@
                         <input type="checkbox" @bind="i.Done" class="custom-checkbox"/>
                     </span>
                 </div>
-                <input type="text" @bind="i.Title" class="form-control" placeholder="Todo"/>
-                <input type="text" @bind="i.Note" class="form-control" placeholder="Note"/>
+                <input type="text" @bind="i.Title" class="form-control" placeholder="Todo" @onfocus="@(e=>_item=i)"/>
+                <input type="text" @bind="i.Note" class="form-control" placeholder="Note" @onfocus="@(e=>_item=i)"/>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-danger" type="button">Delete</button>
+                    <button class="btn btn-outline-danger" type="button" @onclick="@(e=>_data.Remove(i))">Delete</button>
                 </div>
             </div>
         </li>
     }
 </ol>
+<button @onclick="Clear" class="btn btn-outline-danger">Remove Done</button>
+<button class="btn btn-outline-danger" @onclick="ClearAll">Clear All</button>
+<button class="btn btn-outline-primary" @onclick="Save">Save</button>

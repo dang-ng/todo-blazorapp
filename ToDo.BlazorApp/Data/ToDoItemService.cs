@@ -16,6 +16,11 @@ public class ToDoItemService
 
     public List<ToDoItem> GetData()
     {
+        if (File.Exists(_file))
+        {
+            string json = File.ReadAllText(_file);
+            _data = JsonSerializer.Deserialize<List<ToDoItem>>(json)!;
+        }
         return _data;
     }
 
