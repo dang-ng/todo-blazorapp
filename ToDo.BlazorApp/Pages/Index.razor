@@ -1,0 +1,35 @@
+﻿@page "/"
+@using Data
+@inject ToDoItemService Service
+@code {
+
+    private List<ToDoItem> _data;
+    private string _current;
+    private ToDoItem _item;
+
+    protected override void OnInitialized()
+    {
+        _data = Service.GetData();
+        _item = _data != null && _data.Count > 0 ? _data[0] : null;
+    }
+}
+
+<ol class="list-group">
+    @foreach (var i in _data)
+    {
+        <li>
+            <div class="input-group mb-3 @(i.Done?"border border-success":"")">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <input type="checkbox" @bind="i.Done" class="custom-checkbox"/>
+                    </span>
+                </div>
+                <input type="text" @bind="i.Title" class="form-control" placeholder="Todo"/>
+                <input type="text" @bind="i.Note" class="form-control" placeholder="Note"/>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-danger" type="button">Delete</button>
+                </div>
+            </div>
+        </li>
+    }
+</ol>
